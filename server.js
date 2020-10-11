@@ -8,4 +8,7 @@ app.get('/time', (req, res) => {
     res.end();
 })
 
-app.listen(8080);
+app.set('port', 80);
+app.listen(app.get('port'), function() {
+    console.log('Server up: http://localhost:' + app.get('port'));
+});
