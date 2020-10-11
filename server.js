@@ -45,7 +45,7 @@ app.put('/quote', (req, res) => {
     });
 });
 
-app.listen(process.env.PORT);
+app.listen(80);
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
