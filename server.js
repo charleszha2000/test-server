@@ -29,16 +29,23 @@ app.get('/quote', (req, res) => {
 
 app.put('/quote', (req, res) => {
     const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
-    req.query
+    if(!req.query.name || !req.query.quote) {
+        res.writeHead(404, {'ContentType' : 'text/plain'});
+        res.end();
+        console.log("quote not put")
+        console.log(req.query)
+        return;
+    }
     client.connect(err => {
         const db = client.db("CharlesZhang_M5");
-        db.collection("quotes").find({}).toArray(function(err, result) {
+        let quote = {name: req.query.name, quote: req.query.quote};
+        db.collection("quotes").insertOne(quote, function(err, result) {
+            console.log(req.query);
             if (err) throw err;
-            let quote = result[getRandomInt(result.length)]; 
             res.writeHead(200, {'ContentType' : 'text/plain'});
-            res.write(quote.quote);
-            res.write(" " + "-" + quote.name);
+            res.write("Success");
             res.end();
+            console.log("QUOTE PUT")
             client.close();
         });
     });
