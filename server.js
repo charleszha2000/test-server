@@ -3,8 +3,7 @@ const app = express();
 
 const MongoClient = require('mongodb').MongoClient;
 
-const uri = "mongodb+srv://db-admin:vQvccC17ncVO79U0@cluster0.kt67l.azure.mongodb.net/CharlesZhang_M5?retryWrites=true&w=majority";
-
+const url = 'mongodb://localhost:27018';
 
 app.get('/time', (req, res) => {
     res.writeHead(200, {'ContentType' : 'text/plain'});
@@ -13,7 +12,7 @@ app.get('/time', (req, res) => {
 })
 
 app.get('/quote', (req, res) => {
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
     client.connect(err => {
         const db = client.db("CharlesZhang_M5");
         db.collection("quotes").find({}).toArray(function(err, result) {
@@ -29,7 +28,7 @@ app.get('/quote', (req, res) => {
 });
 
 app.put('/quote', (req, res) => {
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
     req.query
     client.connect(err => {
         const db = client.db("CharlesZhang_M5");
